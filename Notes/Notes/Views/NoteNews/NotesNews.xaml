@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Notes.ViewModel"
+             xmlns:cells="clr-namespace:Notes.Cells"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:DataType="viewmodels:NoteNewsViewModel"
+             x:Class="Notes.Views.NotesNews"
+             x:Name="NoteNewsPage">
+    <ContentPage.BindingContext>
+        <viewmodels:NoteNewsViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="Normal">
+                <ViewCell>
+                    <cells:NoteNewsCard/>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="Special">
+                <ViewCell>
+                    <cells:SpecialItem/>
+                </ViewCell>
+            </DataTemplate>
+            <cells:ItemDataTemplateSelector x:Key="NoteNewsSelector"
+                    Normal="{StaticResource Normal}"
+                    Special="{StaticResource Special}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ListView
+        CachingStrategy="RecycleElement"
+        Style="{StaticResource NoteNewsListView}"
+        GroupDisplayBinding="{Binding Key}"
+        IsGroupingEnabled="True"
+        IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+        SelectedItem="{Binding CurrentNoteNews, Mode=TwoWay}"
+        ItemsSource="{Binding NoteNewsGroups}"
+        RefreshCommand="{Binding RefreshCommand}"
+        ItemTemplate="{StaticResource NoteNewsSelector}"
+        >
+        <ListView.Behaviors>
+            <xct:EventToCommandBehavior
+                Command="{Binding SelectedCommand}"
+                EventName="ItemSelected" />
+        </ListView.Behaviors>
+        <ListView.GroupHeaderTemplate>
+            <DataTemplate x:DataType="{x:Null}">
+                <ViewCell>
+                    <StackLayout Padding="20,0">
+                        <Label Style="{StaticResource LabelMedium}" Text="{Binding Key}" />
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.GroupHeaderTemplate>
+        <ListView.Header>
+            <StackLayout Orientation="Horizontal">
+                <Label
+                    Margin="0"
+                    FontFamily="AC"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource LabelLarge}"
+                    Text="">
+                </Label>
+            </StackLayout>
+        </ListView.Header>
+        <ListView.Footer>
+            <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                <Button
+                    Command="{Binding LoadMoreCommand}"
+                    Style="{StaticResource ButtonOutline}"
+                    Text="Показать больше" />
+            </StackLayout>
+        </ListView.Footer>
+    </ListView>
+</ContentPage>

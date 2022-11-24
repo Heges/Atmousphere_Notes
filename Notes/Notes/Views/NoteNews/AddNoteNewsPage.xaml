@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Notes.Views.AddNoteNewsPage"
+             xmlns:viewmodel="clr-namespace:Notes.ViewModel"
+             Title="{Binding Title}"
+             x:DataType="viewmodel:AddNoteNewsModel"
+             xmlns:cells="clr-namespace:Notes.Cells" xmlns:xct="http://xamarin.com/schemas/2020/toolkit">
+    <ContentPage.BindingContext>
+        <viewmodel:AddNoteNewsModel></viewmodel:AddNoteNewsModel>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="Normal">
+                <ViewCell>
+                    <cells:AddNoteNewsCard/>
+                </ViewCell>
+            </DataTemplate>
+            <cells:ItemDataTemplateSelector x:Key="NoteNewsSelector"
+                    Normal="{StaticResource Normal}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <ListView
+            CachingStrategy="RecycleElement"
+            Style="{StaticResource NoteNewsListView}"
+            ItemTemplate="{StaticResource NoteNewsSelector}"
+            ItemsSource="{Binding CollectionList}"
+            IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+            RefreshCommand="{Binding RefreshCommand}"
+            ItemSelected="ListView_ItemSelected"
+            >
+            <ListView.Header>
+                <StackLayout Orientation="Horizontal">
+                    <Label
+                    Margin="20"
+                    FontFamily="AC"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource LabelLarge}"
+                    Text="{Binding Title}">
+                    </Label>
+                </StackLayout>
+            </ListView.Header>
+            <ListView.Footer>
+                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                </StackLayout>
+            </ListView.Footer>
+        </ListView>
+    </ContentPage.Content>
+</ContentPage>

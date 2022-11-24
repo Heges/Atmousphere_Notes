@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      xmlns:models="clr-namespace:Notes.Models;assembly=Notes"
+      x:Class="Notes.Cells.ServiceCard"
+      x:DataType="models:Service"
+      Margin="20,0,20,0"
+      RowSpacing="0"
+      ColumnSpacing="0">
+    <Frame Style="{StaticResource ServiceCard}">
+        <StackLayout Orientation="Horizontal">
+            <StackLayout VerticalOptions="Center">
+                <Label 
+                    Text="{Binding Name}"
+                       Style="{StaticResource LabelMedium}" 
+                       VerticalOptions="Center"></Label>
+                <Label 
+                    Grid.Row="1"
+                    VerticalOptions="Start">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Требуемое время(в среднем): " Style="{StaticResource LabelSmall}"/>
+                            <Span Text="{Binding RequiredTime}" FontAttributes="Bold" Style="{StaticResource LabelSmall}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label
+                    Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    HorizontalTextAlignment="Start"
+                    VerticalOptions="Start">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="Цена от: " Style="{StaticResource LabelSmall}"/>
+                            <Span Text="{Binding PriceFrom}" FontAttributes="Bold" Style="{StaticResource LabelSmall}"/>
+                            <Span Text=" до: " Style="{StaticResource LabelSmall}"/>
+                            <Span Text="{Binding PriceTo}" FontAttributes="Bold" Style="{StaticResource LabelSmall}"/>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+            </StackLayout>
+        </StackLayout>
+    </Frame>
+</Grid>

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:models="clr-namespace:Notes.Models"
+             x:Class="Notes.Cells.AddNoteNewsCard"
+             x:DataType="models:NoteNews"
+             >
+    <StackLayout Padding="20,20,20,20" Orientation="Vertical">
+        <Image Source="{Binding ImageUrl}" HeightRequest="400" WidthRequest="400"/>
+        <Label Text="{Binding Description}"
+                                   Style="{StaticResource LabelLarge}" 
+                                   VerticalOptions="FillAndExpand"></Label>
+        <Label Text="{Binding DateCreation}"
+                                   VerticalOptions="Start"></Label>
+    </StackLayout>
+</Grid>

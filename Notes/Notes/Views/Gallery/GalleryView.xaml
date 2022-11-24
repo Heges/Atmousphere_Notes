@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Notes.ViewModel"
+             xmlns:cells="clr-namespace:Notes.Cells"
+             x:DataType="viewmodels:GalleryViewModel"
+             x:Class="Notes.Views.GalleryView"
+             >
+    <ContentPage.BindingContext>
+        <viewmodels:GalleryViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="Normal">
+                <StackLayout>
+                    <Grid Padding="10" HorizontalOptions="CenterAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="450" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="320" />
+                        </Grid.ColumnDefinitions>
+                        <cells:GalleryCard/>
+                    </Grid>
+                </StackLayout>
+            </DataTemplate>
+            <cells:ItemDataTemplateSelector x:Key="GallerySelector"
+                    Normal="{StaticResource Normal}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <CollectionView 
+            ItemsSource="{Binding GaleryList}"
+            ItemTemplate="{StaticResource GallerySelector}"
+            Style="{StaticResource GalleryCollectionView}"
+            Margin="0,0,0,0"
+            HorizontalOptions="Center"
+            >
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout Orientation="Vertical"
+                        Span="2" />
+            </CollectionView.ItemsLayout>
+        </CollectionView>
+    </ContentPage.Content>
+</ContentPage>

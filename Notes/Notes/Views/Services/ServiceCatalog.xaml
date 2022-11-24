@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodels="clr-namespace:Notes.ViewModel"
+             xmlns:cells="clr-namespace:Notes.Cells"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"
+             x:DataType="viewmodels:ServiceViewModel"
+             x:Class="Notes.Views.ServiceCatalog"
+             BackgroundColor="{AppThemeBinding 
+                        Dark={StaticResource WindowBackgroundColorDark}, 
+                        Light={StaticResource WindowBackgroundColor}}"
+             >
+    <ContentPage.BindingContext>
+        <viewmodels:ServiceViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="Normal">
+                <ViewCell>
+                    <cells:ServiceCard/>
+                </ViewCell>
+            </DataTemplate>
+            <DataTemplate x:Key="Special">
+                <ViewCell>
+                    <cells:SpecialItem/>
+                </ViewCell>
+            </DataTemplate>
+            <cells:ItemDataTemplateSelector x:Key="ServiceSelector"
+                    Normal="{StaticResource Normal}"
+                    Special="{StaticResource Special}"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ListView
+        SeparatorVisibility="None"
+        CachingStrategy="RecycleElement"
+        Style="{StaticResource NoteNewsListView}"
+        GroupDisplayBinding="{Binding Key}"
+        IsGroupingEnabled="True"
+        IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+        SelectedItem="{Binding CurrentService, Mode=TwoWay}"
+        ItemsSource="{Binding ServiceGroup}"
+        RefreshCommand="{Binding RefreshCommand}"
+        ItemTemplate="{StaticResource ServiceSelector}">
+        <ListView.Behaviors>
+            <xct:EventToCommandBehavior
+                Command="{Binding SelectedCommand}"
+                EventName="ItemSelected" />
+        </ListView.Behaviors>
+        <ListView.GroupHeaderTemplate>
+            <DataTemplate x:DataType="{x:Null}">
+                <ViewCell>
+                    <StackLayout Padding="0,0,0,0" Margin="10,0,0,0">
+                        <Label FontFamily="AC" Style="{StaticResource LabelLarge}" Text="{Binding Key}" />
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.GroupHeaderTemplate>
+        <ListView.Header>
+            <StackLayout Orientation="Horizontal">
+                <Label
+                    Margin="0"
+                    FontFamily="AC"
+                    HorizontalOptions="Center"
+                    Style="{StaticResource LabelLarge}"
+                    Text="">
+                </Label>
+            </StackLayout>
+        </ListView.Header>
+        <ListView.Footer>
+            <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                <Button
+                    Command="{Binding LoadMoreCommand}"
+                    Style="{StaticResource ButtonOutline}"
+                    Text="Load More" />
+            </StackLayout>
+        </ListView.Footer>
+    </ListView>
+</ContentPage>

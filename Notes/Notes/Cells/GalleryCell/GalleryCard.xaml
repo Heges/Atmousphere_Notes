@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Grid xmlns="http://xamarin.com/schemas/2014/forms" 
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      x:Class="Notes.Cells.GalleryCard"
+      xmlns:models="clr-namespace:Notes.Models;assembly=Notes"
+      x:DataType="models:Gallery"
+      >
+    <Frame Style="{StaticResource GalleryCard}">
+        <StackLayout 
+            Orientation="Vertical" 
+            HorizontalOptions="Center">
+            <Image 
+                Source="{Binding ImageUrl}" 
+                HeightRequest="300" 
+                Aspect="AspectFill" 
+                BackgroundColor="{AppThemeBinding 
+                Light={StaticResource WindowBackgroundColor}}"
+                >
+            </Image>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <Label Text="{Binding Name}"
+                       Style="{StaticResource LabelLarge}" 
+                       VerticalOptions="Center"></Label>
+            </StackLayout>
+        </StackLayout>
+    </Frame>
+</Grid>
